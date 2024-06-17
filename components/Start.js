@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text,  TextInput, ImageBackground, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text,  TextInput, ImageBackground, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import { useState } from "react";
 
 // Define the Start component
@@ -16,6 +16,7 @@ const Start = ({ navigation }) => {
         resizeMode="cover"
       >
         <Text style={styles.appTitle}>Chat App</Text>
+        
         <View style={styles.container}>
           <TextInput
             style={styles.textInput}
@@ -69,6 +70,9 @@ const Start = ({ navigation }) => {
             <Text style={styles.textButton}>Start Chatting</Text>
           </TouchableOpacity>
         </View>
+        {Platform.OS === "android" ? (
+        <KeyboardAvoidingView behavior="height" />
+      ) : null}
       </ImageBackground>
     );
   };
