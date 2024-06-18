@@ -2,37 +2,46 @@ import { Bubble, GiftedChat } from "react-native-gifted-chat";
 import { useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, View } from "react-native";
 
-const Chat = ({ route, navigation }) => {
-    const { name, background } = route.params;
+import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
+
+const Chat = ({ db, route, navigation }) => {
+    const { name, background, userID } = route.params;
     // Create messages using State
     const [messages, setMessages] = useState([]);
 
+  // useEffect hook to set messages options
+  // Create a query to get the "messages" collection from the Firestore database
     useEffect(() => {
-        navigation.setOptions({ title: name })
-        setMessages([
-            {
-                _id: 1,
-                text: `Hello from ${name}`,
-                createdAt: new Date(),
-                user: {
-                    _id: 2,
-                    name: "React Native",
-                    avatar: "https://placebear.com/140/140",
-                },
-            },
-            {
-                _id: 2,
-                text: 'You have entered Chat.',
-                createdAt: new Date(),
-                system: true,
-                background: 'FFF',
-            },
-        ]);
-    }, []);
-
-    const onSend = (newMessages) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
-    }
+        navigation.setOptions({ title: name });
+    
+          const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+    
+          // Subscribe to changes in the "messages" collection using onSnapshot.
+          // This function will be called whenever there are changes in the collection.
+          const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+            // Initialize an empty array to store the new messages
+            let newMessages = [];
+            // Iterate through each document in the snapshot
+            documentsSnapshot.forEach((doc) => {
+              newMessages.push({
+                id: doc.id,
+                ...doc.data(),
+                createdAt: new Date(doc.data().createdAt.toMillis()),
+              })
+            })
+            setMessages(newMessages);
+          });
+        // Clean up code
+        return () => {
+          if (unsubMessages) unsubMessages();
+        };
+      }, []); 
+    
+      
+    
+      const onSend = (newMessages) => {
+        addDoc(collection(db, "messages"), newMessages[0]);
+      };
 
     const renderBubble = (props) => {
         return <Bubble
@@ -55,7 +64,8 @@ const Chat = ({ route, navigation }) => {
                 renderBubble={renderBubble}
                 onSend={messages => onSend(messages)}
                 user={{
-                    _id: 1
+                    _id: userID,
+                    name: name
                 }}
             />
             {/* Fix Android Keyboard Issue */}
