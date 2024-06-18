@@ -20,34 +20,29 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   // Web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyCNDm4tSmAu43ETdunHUgupbWo0HhuNFzk",
-    authDomain: "chat-app-1b67c.firebaseapp.com",
-    projectId: "chat-app-1b67c",
-    storageBucket: "chat-app-1b67c.appspot.com",
-    messagingSenderId: "600670126678",
-    appId: "1:600670126678:web:8b4e2c8bfbdb90e883f1f7"
+    //post no secrets
   };
 
   // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
 
- // Initialize Cloud Firestore and get a reference to the service
- const db = getFirestore(app);
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = getFirestore(app);
 
 
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Start'>
         <Stack.Screen
-        name='Start'
-        component={Start}>
+          name='Start'
+          component={Start}>
         </Stack.Screen>
 
         <Stack.Screen
-        name='Chat'>
+          name='Chat'>
           {props => <Chat db={db} {...props} />}
         </Stack.Screen>
-        
+
       </Stack.Navigator>
     </NavigationContainer>
 
