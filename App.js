@@ -1,7 +1,3 @@
-import { LogBox, Alert } from 'react-native';
-LogBox.ignoreAllLogs();
-LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
-
 //import React Navigation
 import { LogBox, Alert } from 'react-native';
 LogBox.ignoreAllLogs();
@@ -13,14 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 //import screens
 import Start from "./components/Start";
-
-//import screens
-import Start from "./components/Start";
 import Chat from "./components/Chat";
-
-// import Firestore
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 
 //Create Navigation
 // import Firestore
@@ -32,9 +21,16 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   // Web app's Firebase configuration
+
   const firebaseConfig = {
-  //Dear morons at CareerFoundry: you cannot post API secrets on GitHub
+    apiKey: "AIzaSyBf0TEFZTi4XsOFAztCqA27QG4YnRDHlJ4",
+    authDomain: "chat-app2-d8821.firebaseapp.com",
+    projectId: "chat-app2-d8821",
+    storageBucket: "chat-app2-d8821.appspot.com",
+    messagingSenderId: "447781891384",
+    appId: "1:447781891384:web:29b6e3c76c9b074c4965cd"
   };
+
 
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
