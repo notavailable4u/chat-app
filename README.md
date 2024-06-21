@@ -49,7 +49,7 @@ This project, a chat-app for mobile devices built using React Native and react-n
 ## Installation
 + Clone this repository
 + Follow the [Expo Documentation](https://docs.expo.dev/get-started/create-a-project/) to install Expo and create a project
-+ Expo requires [Node.js] (LTS -Long-Term Support Version) (https://nodejs.org/) which was v20.15.0 at time of project creation
++ Expo requires [Node.js LTS -Long-Term Support Version](https://nodejs.org/) which was v20.15.0 at time of project creation
 + Install all dependencies listed above
 + Follow [Firebase Documentation](https://firebase.google.com/docs) to set up database
 + [Android Studio](https://developer.android.com/studio) was used for device emulation
